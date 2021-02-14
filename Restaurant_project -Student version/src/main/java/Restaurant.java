@@ -62,4 +62,22 @@ public class Restaurant {
     }
 
     public String getLocation() {return location;}
+
+    /**
+     * Calculates and returns total cost of the selected menu items.
+     * @param selectedItems list of selected menu items.
+     * @return total cost of the selected items.
+     */
+    public int calculateOrderTotal(ArrayList<String> selectedItems){
+        int totalOrderCost = 0;
+        for (Item menuItem : this.getMenu()) {
+            for (String selectedItem : selectedItems) {
+                if(selectedItem.equals(menuItem.getName())){
+                    totalOrderCost+=menuItem.getPrice();
+                }
+            }
+        }
+
+        return totalOrderCost;
+    }
 }
