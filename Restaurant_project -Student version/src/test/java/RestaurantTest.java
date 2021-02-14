@@ -6,6 +6,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -55,4 +56,25 @@ class RestaurantTest {
                 ()->restaurant.removeFromMenu("French fries"));
     }
     //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    //<<<<<<<<<<<<<<<<<<<<<<<ORDER TOTAL>>>>>>>>>>>>>>>>>>>>>>>
+    @Test
+    public void order_total_cost_should_be_calculated_on_selecting_menu_items(){
+        this.restaurant = MockedData.ArrangeRestaurant();
+        ArrayList<String> selectedItems = new ArrayList<>();
+        selectedItems.add("Vegetable lasagne");
+        int expectedTotalCost = 0;
+        for (Item menuItem : this.restaurant.getMenu()) {
+            for (String selectedItem : selectedItems) {
+                if(selectedItem.equals(menuItem.getName())){
+                    expectedTotalCost+=menuItem.getPrice();
+                }
+            }
+        }
+
+        int actualTotalCost = restaurant.calculateOrderTotal(selectedItems);
+        assertEquals(expectedTotalCost, actualTotalCost);
+    }
+
+    //<<<<<<<<<<<<<<<<<<<<<<<ORDER TOTAL>>>>>>>>>>>>>>>>>>>>>>
 }
